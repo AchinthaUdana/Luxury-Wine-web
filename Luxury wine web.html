@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noir | Exceptional Wines of Distinction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --gold: #C6A769;
+            --dark: #121212;
+            --darker: #0A0A0A;
+            --light: #E8E8E8;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        nav.scrolled {
+            background-color: rgba(10, 10, 10, 0.95);
+            padding: 15px 5%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 15px;
+            letter-spacing: 1px;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--gold);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .cart-btn {
+            background-color: transparent;
+            color: var(--light);
+            padding: 10px 25px;
+            border: 1px solid var(--gold);
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .cart-btn:hover {
+            background-color: var(--gold);
+            color: var(--dark);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1510812431401-41e2f9c26950?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 72px;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .explore-btn {
+            background-color: transparent;
+            color: var(--light);
+            padding: 15px 30px;
+            border: 1px solid var(--light);
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .explore-btn:hover {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .shop-btn {
+            background-color: var(--gold);
+            color: var(--dark);
+            padding: 15px 30px;
+            border: 1px solid var(--gold);
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .shop-btn:hover {
+            background-color: transparent;
+            color: var(--gold);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 100px 10%;
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            background-color: var(--darker);
+        }
+        
+        .about-img {
+            flex: 1;
+            height: 600px;
+            background: url('https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+        }
+        
+        .about-content {
+            flex: 1;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: block;
+            text-transform: uppercase;
+        }
+        
+        .about-content h2 {
+            font-size: 42px;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+        
+        .about-content p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .signature {
+            font-family: 'Parisienne', cursive;
+            font-size: 24px;
+            color: var(--gold);
+            margin-top: 20px;
+        }
+        
+        /* Collections Section */
+        .collections {
+            padding: 100px 10%;
+            text-align: center;
+        }
+        
+        .section-header {
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+        
+        .section-header p {
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        .collection-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .collection-card {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+        
+        .collection-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .collection-card:hover .collection-img {
+            transform: scale(1.05);
+        }
+        
+        .collection-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+        }
+        
+        .collection-overlay h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .collection-overlay p {
+            font-size: 14px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        .view-btn {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            text-transform: uppercase;
+        }
+        
+        .view-btn:hover {
+            color: var(--gold);
+        }
+        
+        .view-btn i {
+            font-size: 10px;
+        }
+        
+        /* Featured Wines */
+        .featured {
+            padding: 100px 10%;
+            background-color: var(--darker);
+        }
+        
+        .wine-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .wine-card {
+            text-align: center;
+            padding: 40px 30px;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+        
+        .wine-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-10px);
+        }
+        
+        .wine-img {
+            width: 120px;
+            height: 350px;
+            object-fit: contain;
+            margin: 0 auto 25px;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+        }
+        
+        .wine-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .wine-card .region {
+            font-size: 14px;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+        
+        .wine-card .price {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .add-to-cart {
+            background-color: transparent;
+            color: var(--light);
+            padding: 10px 25px;
+            border: 1px solid var(--gold);
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--gold);
+            color: var(--dark);
+        }
+        
+        /* Tasting Section */
+        .tasting {
+            padding: 100px 10%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1568219656418-15c329312bf1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+            text-align: center;
+        }
+        
+        .tasting h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+        
+        .tasting p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            padding: 100px 10%;
+            text-align: center;
+        }
+        
+        .newsletter h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .newsletter p {
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--light);
+            font-size: 14px;
+        }
+        
+        .newsletter-form input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .newsletter-form button {
+            background-color: var(--gold);
+            color: var(--dark);
+            border: none;
+            padding: 0 30px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .newsletter-form button:hover {
+            background-color: var(--light);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 80px 10% 30px;
+            background-color: var(--darker);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-col h3 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 1px;
+            background-color: var(--gold);
+        }
+        
+        .footer-col p {
+            opacity: 0.7;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .footer-links li {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--gold);
+            padding-left: 5px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            opacity: 0.7;
+        }
+        
+        .contact-icon {
+            color: var(--gold);
+            margin-top: 3px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: var(--light);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--gold);
+            color: var(--dark);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            text-align: center;
+            opacity: 0.6;
+            font-size: 12px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .about {
+                flex-direction: column;
+            }
+            
+            .about-img {
+                width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .newsletter-form input,
+            .newsletter-form button {
+                width: 100%;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Noir</div>
+        <div class="nav-links">
+            <a href="#">Our Wines</a>
+            <a href="#">Vineyards</a>
+            <a href="#">Collections</a>
+            <a href="#">Experience</a>
+            <a href="#">Journal</a>
+        </div>
+        <button class="cart-btn">Cart (0)</button>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Exceptional Wines of Distinction</h1>
+        <p>Discover our limited-production wines crafted with meticulous attention to detail from the finest vineyards around the world.</p>
+        <div class="hero-btns">
+            <button class="explore-btn">Explore Wines</button>
+            <button class="shop-btn">Shop Now</button>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about">
+        <div class="about-img"></div>
+        <div class="about-content">
+            <span class="section-title">Our Story</span>
+            <h2>A Legacy of Winemaking Excellence</h2>
+            <p>Founded in 1978 in the heart of Napa Valley, Noir has been dedicated to producing wines of exceptional quality and character. Our philosophy is simple: great wine begins in the vineyard.</p>
+            <p>Through sustainable practices and minimal intervention, we allow the true expression of each terroir to shine in every bottle. Each vintage tells the story of its origin, captured through our winemaker's artistry.</p>
+            <p class="signature">Antoine Moreau</p>
+            <p>Master Winemaker</p>
+        </div>
+    </section>
+    
+    <!-- Collections Section -->
+    <section class="collections">
+        <div class="section-header">
+            <span class="section-title">Collections</span>
+            <h2>Explore Our Signature Wines</h2>
+            <p>From our acclaimed estate vineyards to exclusive partnerships with renowned growers, each collection represents the pinnacle of its appellation.</p>
+        </div>
+        <div class="collection-cards">
+            <div class="collection-card">
+                <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Estate Collection" class="collection-img">
+                <div class="collection-overlay">
+                    <h3>Estate Collection</h3>
+                    <p>Single-vineyard expressions from our family-owned estates</p>
+                    <a href="#" class="view-btn">View Wines <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="collection-card">
+                <img src="https://images.unsplash.com/photo-1568219656418-15c329312bf1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Reserve Collection" class="collection-img">
+                <div class="collection-overlay">
+                    <h3>Reserve Collection</h3>
+                    <p>Limited production wines of exceptional depth and complexity</p>
+                    <a href="#" class="view-btn">View Wines <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="collection-card">
+                <img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Legacy Collection" class="collection-img">
+                <div class="collection-overlay">
+                    <h3>Legacy Collection</h3>
+                    <p>Rare library selections and large-format offerings</p>
+                    <a href="#" class="view-btn">View Wines <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Wines -->
+    <section class="featured">
+        <div class="section-header">
+            <span class="section-title">Featured Wines</span>
+            <h2>Current Releases</h2>
+            <p>Explore our selection of highly-rated wines from our most recent vintages.</p>
+        </div>
+        <div class="wine-cards">
+            <div class="wine-card">
+                <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="2018 Cabernet Sauvignon" class="wine-img">
+                <h3>2018 Cabernet Sauvignon</h3>
+                <p class="region">Napa Valley, Estate Vineyard</p>
+                <p class="price">$125</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="wine-card">
+                <img src="https://images.unsplash.com/photo-1568827999250-3f6afff96e66?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="2019 Pinot Noir" class="wine-img">
+                <h3>2019 Pinot Noir</h3>
+                <p class="region">Russian River Valley</p>
+                <p class="price">$85</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="wine-card">
+                <img src="https://images.unsplash.com/photo-1568827999250-3f6afff96e66?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="2017 Chardonnay" class="wine-img">
+                <h3>2017 Chardonnay</h3>
+                <p class="region">Sonoma Coast</p>
+                <p class="price">$75</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="wine-card">
+                <img src="https://images.unsplash.com/photo-1568827999250-3f6afff96e66?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="2016 Reserve Blend" class="wine-img">
+                <h3>2016 Reserve Blend</h3>
+                <p class="region">Bordeaux, France</p>
+                <p class="price">$225</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Tasting Section -->
+    <section class="tasting">
+        <h2>Private Wine Tastings</h2>
+        <p>Experience our wines in an intimate setting at our estate or in your home. Our sommeliers will guide you through a curated selection paired with artisanal cheeses and charcuterie.</p>
+        <button class="explore-btn">Book an Experience</button>
+    </section>
+    
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <h2>Join Our Cellar Club</h2>
+        <p>Receive exclusive access to limited releases, vintage previews, and members-only events.</p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="Your email address">
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>Noir Wines</h3>
+                <p>Crafting exceptional wines with respect for tradition and passion for innovation since 1978.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Explore</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Our Wines</a></li>
+                    <li><a href="#">Vineyards</a></li>
+                    <li><a href="#">Winemaking</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Awards</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Visit</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Tasting Room</a></li>
+                    <li><a href="#">Tours</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Directions</a></li>
+                    <li><a href="#">Hours</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt contact-icon"></i>
+                        <span>123 Vineyard Lane, Napa, CA 94558</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt contact-icon"></i>
+                        <span>+1 (707) 555-0199</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <span>info@noirwines.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Noir Wines. All Rights Reserved. | Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
